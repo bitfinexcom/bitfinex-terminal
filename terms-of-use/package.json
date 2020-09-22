@@ -1,0 +1,26 @@
+{
+  "name": "bitfinex-terminal-terms-of-use",
+  "version": "1.0.0",
+  "description": "The Terms of Use for Bitfinex Terminal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinexcom/bitfinex-terminal.git"
+  },
+  "keywords": [
+    "terms",
+    "service",
+    "tos",
+    "bitfinex",
+    "terminal"
+  ],
+  "author": "Bitfinex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitfinexcom/bitfinex-terminal/issues"
+  },
+  "homepage": "https://github.com/bitfinexcom/bitfinex-terminal#readme"
+}
