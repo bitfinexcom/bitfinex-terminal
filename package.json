@@ -1,0 +1,34 @@
+{
+  "name": "bfx-terminal-examples",
+  "version": "1.0.0",
+  "description": " Bitfinex Terminal Examples",
+  "main": "trades-full-copy.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinexcom/bitfinex-terminal.git"
+  },
+  "keywords": [
+    "dazaar",
+    "hypercore",
+    "bitfinex",
+    "BTCUSD"
+  ],
+  "author": "The Bitfinex Team",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "bfx-api-node-models": "^1.2.11",
+    "bfx-hf-backtest": "^1.1.1",
+    "bfx-hf-strategy": "^1.0.0",
+    "bfx-hf-strategy-dazaar": "^1.0.0",
+    "bfx-hf-util": "^1.0.11",
+    "bitfinex-api-node": "^4.0.15",
+    "bitfinex-terminal-key-encoding": "^1.1.0",
+    "bitfinex-terminal-terms-of-use": "^1.0.0",
+    "dazaar": "^1.4.0",
+    "hyperbee": "0.0.18"
+  }
+}
