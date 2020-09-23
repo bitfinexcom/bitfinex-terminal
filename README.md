@@ -2,7 +2,7 @@
 
 Bitfinex Terminal offers market data as live data streams and is built on top of [Dazaar](https://github.com/bitfinexcom/dazaar). It offers first class support for Algo Traders by offering market data over a distributed database to everyone.
 
-The market data streams are free and allow algo traders and data scientist easy and fast access to our historical trading data. Trading data is easy to download and replicate. It is shared on a P2P network - like BitTorrent - but with a database interface. Also, unlike with BitTorrent, you won't have to download everything until you can use it, streaming time ranges is supported. And if you decide to download more data, e.g. from an earlier timeframe, it will of course preserve the data ordered, in a nice B-Tree, for fast access.
+The market data streams are free and allow algo traders and data scientists easy and fast access to our historical trading data. Trading data is easy to download and replicate. It is shared on a P2P network - like BitTorrent - but with a database interface. Also, unlike with BitTorrent, you won't have to download everything until you can use it, streaming time ranges is supported. And if you decide to download more data, e.g. from an earlier timeframe, it will of course preserve the data ordered, in a nice B-Tree, for fast access.
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ The market data streams are free and allow algo traders and data scientist easy 
 
 ## How to use it?
 
-Every data stream in Bitfinex Terminal and also Dazaar has a unique `id` on the network. Imagine it like the url of the datastream. You can directly use ids or you can use dazaar cards, which are [available for download](./cards). We have prepared a few examples that will show how to use it.
+Every data stream in Bitfinex Terminal and also Dazaar has a unique `id` on the network. Imagine it like the url of the data stream. You can directly use ids or you can use Dazaar Cards, which are [available for download](./cards). We have prepared a few examples that will show how to use it.
 
 <a id="firstclass" />
 
