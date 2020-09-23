@@ -21,7 +21,7 @@ const get24HoursAgo = (date) => {
 
 const market = {
   symbol: SYMBOLS.BTC_USD,
-  tf: TIME_FRAMES.ONE_HOUR
+  tf: TIME_FRAMES.FIVE_MINUTES
 }
 
 const strat = EMAStrategy(market)
@@ -52,8 +52,8 @@ async function runTest (db) {
   })
 
   const stream = db.createReadStream({
-    gte: { candle: '5m', timestamp: from },
-    lte: { candle: '5m', timestamp: to }
+    gte: { candle: TIME_FRAMES.FIVE_MINUTES, timestamp: from },
+    lte: { candle: TIME_FRAMES.FIVE_MINUTES, timestamp: to }
   })
 
   let btState
