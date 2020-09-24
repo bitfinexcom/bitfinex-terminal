@@ -11,6 +11,7 @@ The market data streams are free and allow algo traders and data scientists easy
   1. [Example: Get a Full Snapshot of the BTCUSD trades, and keep following new updates](#example-trades)
   1. [Example: Query Candles Data](#example-candles)
   1. [Tutorial: Backtest your Trading Strategies with Bitfinex Terminal & Honey Framework](./articles/backtesting-with-hf.md)
+  1. [Tutorial: Execute your Trading Strategy with the Honey Framework and Bitfinex Terminal](./articles/execute-strategy-hf.md)
   1. [Article: Learn more about Dazaar](https://blog.dazaar.com/2020/09/12/introducing-dazaar/)
 
 <a id="howtouse" />
@@ -172,6 +173,7 @@ In this example we did a sparse-enabled select on the data, so just the data we 
 Our Tutorials can be found in the folder [articles](./articles).
 
  - [Tutorial: Backtest your Trading Strategies with Bitfinex Terminal & Honey Framework](./articles/backtesting-with-hf.md)
+ - [Tutorial: Execute your Trading Strategy with the Honey Framework and Bitfinex Terminal](./articles/execute-strategy-hf.md)
 
 ## Articles
 
