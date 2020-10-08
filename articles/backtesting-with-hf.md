@@ -11,6 +11,14 @@ Bitfinex Terminal supports Dazaar Cards, which is an easy way to access the data
 
 You can clone this repo, run `npm install`, then run `node examples/backtest.js` to get the same result.
 
+```sh
+git clone https://github.com/bitfinexcom/bitfinex-terminal.git
+cd bitfinex-terminal
+npm install
+node examples/backtest.js
+```
+
+
 ## Try it Step by step
 
 To start from fresh, we install the required dependencies:
