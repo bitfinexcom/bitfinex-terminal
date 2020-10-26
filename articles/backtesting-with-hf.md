@@ -9,8 +9,19 @@ Bitfinex Terminal supports Dazaar Cards, which is an easy way to access the data
 
 ## Let's try it
 
+You can clone this repo, run `npm install`, then run `node examples/backtest.js` to get the same result.
 
-To begin, we install the required dependencies:
+```sh
+git clone https://github.com/bitfinexcom/bitfinex-terminal.git
+cd bitfinex-terminal
+npm install
+node examples/backtest.js
+```
+
+
+## Try it Step by step
+
+To start from fresh, we install the required dependencies:
 
 ```
 npm install dazaar hyperbee bitfinex-terminal-key-encoding bfx-hf-util bfx-hf-backtest \
@@ -71,10 +82,10 @@ const dmarket = dazaar('dbs/terminal-backtest')
 
 With the above command, Dazaar will create a local database in `dbs/terminal-backtest`. All of our data will be stored in this folder, so if you want to start over, you can simply delete it.
 
-As the next step we download the Dazaar Card for BTCUSD from [https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.trades.json](https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.trades.json) and load it:
+As the next step we download the Dazaar Card for BTCUSD from [https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json](https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json) and load it:
 
 ```
-wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.trades.json
+wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json
 ```
 
 ```js
