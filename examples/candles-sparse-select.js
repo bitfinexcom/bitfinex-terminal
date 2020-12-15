@@ -9,7 +9,7 @@ const terms = require('bitfinex-terminal-terms-of-use')
 
 const market = dazaar('dbs/sparse-candles')
 
-const card = require('../cards/bitfinex.terminal.btcusd.candles.json')
+const card = require('../cards/free-candles/bitfinex.terminal.btcusd.candles.json')
 const buyer = market.buy(card, { sparse: true, terms })
 
 buyer.on('feed', function () {

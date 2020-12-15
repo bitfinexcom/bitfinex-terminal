@@ -28,7 +28,7 @@ const strat = EMAStrategy(market)
 
 const dmarket = dazaar('dbs/terminal-backtest')
 
-const card = require('../cards/bitfinex.terminal.btcusd.candles.json')
+const card = require('../cards/free-candles/bitfinex.terminal.btcusd.candles.json')
 const buyer = dmarket.buy(card, { sparse: true, terms })
 
 buyer.on('feed', async function () {

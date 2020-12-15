@@ -9,7 +9,7 @@ const terms = require('bitfinex-terminal-terms-of-use')
 
 const market = dazaar('dbs/full-trades')
 
-const card = require('../cards/bitfinex.terminal.btcusd.trades.json')
+const card = require('../cards/free-trades/bitfinex.terminal.btcusd.trades.json')
 const buyer = market.buy(card, { sparse: false, terms })
 
 buyer.on('feed', function () {

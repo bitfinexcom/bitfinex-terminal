@@ -71,7 +71,7 @@ const dmarket = dazaar('dbs/terminal-live') // stores received data in `dbs/term
 With `wget` we can pull the Dazaar Card for the data feed we want to consume. An overview of data feeds can be found [here](../cards).
 
 ```
-wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.trades.json
+wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/free-candles/bitfinex.terminal.btcusd.candles.json
 ```
 
 That card is loaded into Dazaar and the Terms of Services are agreed by loading them into Dazaar after we have read them:
