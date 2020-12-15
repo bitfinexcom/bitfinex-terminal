@@ -29,6 +29,6 @@
     "bitfinex-terminal-key-encoding": "^1.1.0",
     "bitfinex-terminal-terms-of-use": "^1.0.0",
     "dazaar": "^1.4.0",
-    "hyperbee": "0.0.18"
+    "hyperbee": "^1.1.0"
   }
 }
