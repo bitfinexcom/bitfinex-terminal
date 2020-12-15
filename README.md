@@ -53,10 +53,10 @@ And we create a Dazaar market. Our data will be stored at `dbs/full-trades`
 const market = dazaar('dbs/full-trades')
 ```
 
-Then we download the [Dazaar Card for the stream](./cards/bitfinex.terminal.btcusd.trades.json) and load it. The option `live: true` keeps the connection open, so we keep listening for updates after the data is fully synced. If we would set `sparse` to `true`, we would just download requested data that we request in a query. This way, we make a full copy. We also accept the Bitfinex Terminal terms of use by loading them into Dazaar, after we have read them:
+Then we download the [Dazaar Card for the stream](./cards/free/trades/bitfinex.terminal.btcusd.trades.json) and load it. The option `live: true` keeps the connection open, so we keep listening for updates after the data is fully synced. If we would set `sparse` to `true`, we would just download requested data that we request in a query. This way, we make a full copy. We also accept the Bitfinex Terminal terms of use by loading them into Dazaar, after we have read them:
 
 ```js
-const card = require('../cards/bitfinex.terminal.btcusd.trades.json')
+const card = require('../cards/free/trades/bitfinex.terminal.btcusd.trades.json')
 const buyer = dmarket.buy(card, { live: true, sparse: false, terms })
 ```
 
@@ -126,10 +126,10 @@ const keyEncoding = require('bitfinex-terminal-key-encoding')
 const market = dazaar('dbs/sparse-candles')
 ```
 
-This time we load a [Dazaar Card for candles](./cards/bitfinex.terminal.btcusd.candles.json). We also enable the `sparse` mode, that means, just the data we directly request is downloaded. We also accept the Bitfinex Terminal terms of use by loading module for it into Dazaar:
+This time we load a [Dazaar Card for candles](./cards/free/candles/bitfinex.terminal.btcusd.candles.json). We also enable the `sparse` mode, that means, just the data we directly request is downloaded. We also accept the Bitfinex Terminal terms of use by loading module for it into Dazaar:
 
 ```js
-const card = require('../cards/bitfinex.terminal.btcusd.candles.json')
+const card = require('../cards/free/candles/bitfinex.terminal.btcusd.candles.json')
 const terms = require('bitfinex-terminal-terms-of-use')
 const buyer = dmarket.buy(card, { sparse: true, terms })
 ```
