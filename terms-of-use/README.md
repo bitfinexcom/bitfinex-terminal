@@ -1,6 +1,6 @@
 # Bitfinex Terminal Terms of Use
 
-## Last Updated: December 15, 2020
+## Last Updated: January 04, 2021
 
 **IMPORTANT:** Historical market data on Bitfinex (the “Bitfinex Market Data”) is made available through a distributed peer-to-peer marketplace known as ‘Dazaar’ that permits the sharing of real-time data without the need for an intermediary (the “Bitfinex Terminal”). While Dazaar has been developed and is operated by Dazaar Limited, the source code for the Bitfinex Terminal has been developed and made available by us. The Bitfinex Terminal permits third parties to develop services, software or solutions that facilitate access to the Bitfinex Market Data that we make available on the Bitfinex Terminal. Accordingly, these Terms of Use will take precedence to any other terms and conditions, agreements or contracts you may have entered into with such third parties and govern your access and subscription to, and use of the Bitfinex Market Data and Bitfinex Terminal (as applicable).
 
@@ -110,4 +110,6 @@ These Terms of Use will be governed by the Laws of the British Virgin Islands. T
 | Pricing Plan         | Description                                                  | Fees (excluding network charges)  | Admitted tokens
 |:---------------------|:-------------------------------------------------------------|:----------------------------------|:---------------
 | Basic                | Trading Bitfinex Market Data and Candle Bitfinex Market Data | Free                              | -
-| Advanced             | Historical Order Book Snapshots                              | $0.02 USD  per hour, per data set | USDt, LEO, BTC
+| Advanced             | Historical Order Book Snapshots                              | $0.02 USD per hour, per data set | USDt
+| Advanced             | Historical Order Book Snapshots                              | 100 Satoshi per hour, per data set | BTC
+| Advanced             | Historical Order Book Snapshots                              | 0.015 LEO per hour, per data set | LEO
