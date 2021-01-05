@@ -1,6 +1,6 @@
 {
   "name": "bitfinex-terminal-terms-of-use",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "The Terms of Use for Bitfinex Terminal",
   "main": "index.js",
   "scripts": {
