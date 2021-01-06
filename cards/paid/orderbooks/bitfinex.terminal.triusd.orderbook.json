@@ -1,0 +1,34 @@
+{
+  "id": "b2b33847a21b9cb160e092743ad95375cd66b599ae79c14045a2738ec24db704",
+  "name": "Bitfinex Terminal Order Book TRIUSD",
+  "payment": [
+    {
+      "method": "ETH",
+      "currency": "USDT",
+      "pubKey": "86b66c7b0a826f539531519076222493964d9b8a3a1db076b98f4c06ae063be9caca352523d6ece123560a6035dc791284f4281e37016ee08e6857af3e40ba48",
+      "erc20Contract": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "erc20ContractDecimals": 6,
+      "amount": 0.02,
+      "unit": "hours",
+      "interval": 1
+    },
+    {
+      "method": "ETH",
+      "currency": "LEO",
+      "pubKey": "86b66c7b0a826f539531519076222493964d9b8a3a1db076b98f4c06ae063be9caca352523d6ece123560a6035dc791284f4281e37016ee08e6857af3e40ba48",
+      "erc20Contract": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3",
+      "erc20ContractDecimals": 18,
+      "amount": 0.015,
+      "unit": "hours",
+      "interval": 1
+    },
+    {
+      "method": "Lightning",
+      "currency": "SATS",
+      "amount": 100,
+      "unit": "hours",
+      "interval": 1,
+      "minSeconds": 1
+    }
+  ]
+}
