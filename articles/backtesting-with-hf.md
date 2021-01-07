@@ -82,10 +82,10 @@ const dmarket = dazaar('dbs/terminal-backtest')
 
 With the above command, Dazaar will create a local database in `dbs/terminal-backtest`. All of our data will be stored in this folder, so if you want to start over, you can simply delete it.
 
-As the next step we download the Dazaar Card for BTCUSD from [https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json](https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json) and load it:
+As the next step we download the Dazaar Card for BTCUSD from [https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/free/candles/bitfinex.terminal.btcusd.candles.json](https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/free/candles/bitfinex.terminal.btcusd.candles.json) and load it:
 
 ```
-wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/bitfinex.terminal.btcusd.candles.json
+wget https://raw.githubusercontent.com/bitfinexcom/bitfinex-terminal/master/cards/free/candles/bitfinex.terminal.btcusd.candles.json
 ```
 
 ```js
