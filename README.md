@@ -262,7 +262,7 @@ buyer.ready(function () {
 
 It will print something like `Pay to 0xaf2333...` to the console. When we pay 2 cents USDT to that address, we get one hour of access to the stream and our replication starts. But for now, we just continue to write our example program.
 
-When we made the payment, as soon as our payment is received, the feed event is triggered, and we start replicating the data. For example purposes, we also do a database query with the orderbook query api:
+When we made the payment, as soon as our payment is received, the feed event is triggered, and we start replicating the data. In case we have already payed, the `feed` event is triggered, too. For example purposes, we also do a database query with the orderbook query api:
 
 ```js
 buyer.on('feed', function () {
@@ -369,7 +369,7 @@ buyer.ready(function () {
 })
 ```
 
-When the payment has arrived its destination, the stream becomes available for Dazaar. On our side a `feed` event is emitted, and we know that we can send our database queries:
+When the payment has arrived its destination, the stream becomes available for Dazaar. On our side a `feed` event is emitted, and we know that we can send our database queries. Of course the `feed` event is also emitted when we have made a payment in the past that is still valid.
 
 ```js
 buyer.on('feed', function () {
