@@ -31,7 +31,7 @@
     "bitfinex-terminal-key-encoding": "^1.1.0",
     "bitfinex-terminal-order-book": "^1.0.0",
     "bitfinex-terminal-terms-of-use": "^4.0.0",
-    "dazaar": "^1.4.0",
-    "hyperbee": "^1.1.0"
+    "dazaar": "^1.6.1",
+    "hyperbee": "^1.5.2"
   }
 }
