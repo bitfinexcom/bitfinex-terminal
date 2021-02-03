@@ -28,7 +28,6 @@
     "bfx-hf-strategy-dazaar": "^1.1.1",
     "bfx-hf-util": "^1.0.11",
     "bitfinex-api-node": "^4.0.15",
-    "bitfinex-terminal-funding-encoding": "^1.0.0",
     "bitfinex-terminal-key-encoding": "^1.1.0",
     "bitfinex-terminal-order-book": "^1.0.0",
     "bitfinex-terminal-terms-of-use": "^4.0.0",
