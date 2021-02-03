@@ -17,6 +17,7 @@ The data is compressed using an effective algorithm, which allows for fast data 
   1. [Example: Access the Paid Orderbooks with USDT](#example-orderbooks-usdt)
   1. [Example: Access the Paid Orderbooks with LND](#example-orderbooks-lnd)
   1. [Example: Query Local Orderbook Data](#example-orderbooks-local)
+  1. [Example: Download and Query Historical Funding Stats](#example-funding-stats)
   1. [Tutorial: Backtest your Trading Strategies with Bitfinex Terminal & Honey Framework](./articles/backtesting-with-hf.md)
   1. [Tutorial: Execute your Trading Strategy with the Honey Framework and Bitfinex Terminal](./articles/execute-strategy-hf.md)
   1. [Article: Learn more about Dazaar](https://blog.dazaar.com/2020/09/12/introducing-dazaar/)
@@ -26,7 +27,12 @@ The data is compressed using an effective algorithm, which allows for fast data 
 
 ## How to use it?
 
-Every data stream in Bitfinex Terminal and also Dazaar has a unique `id` on the network. Imagine it like the url of the data stream. You can directly use ids or you can use Dazaar Cards, which are [available for download](./cards). We have prepared a few examples that will show how to use it.
+Every data stream in Bitfinex Terminal and also Dazaar has a unique `id` on the network. Imagine it like the url of the data stream. You can directly use ids or you can use Dazaar Cards, which are [available for download](./cards). We have prepared a few examples that will show how to use it. Bitfinex Terminal currently offers a mix of free and paid data streams:
+
+ - Historical Candles Data (free)
+ - Historical Trades Data (free)
+ - Historical Funding Stats Data (free)
+ - Historical Orderbooks Data (paid)
 
 Paid streams will require you to send a specific amount of crypto currency to a defined address. Dazaar will start replicating the whole dataset in the background unless sparse-mode is enabled. That means your database query is resolved with a high priority, while it additionally downloads the whole dataset in the background. For a guided example, [see this short how-to guide.](#example-orderbooks)
 
@@ -320,7 +326,8 @@ With that in mind we can start to code and install the required dependencies. To
 
 ```
 npm install dazaar @dazaar/payment-lightning  \
-  bitfinex-terminal-order-book bitfinex-terminal-terms-of-use
+  bitfinex-terminal-order-book bitfinex-terminal-terms-of-use \
+  hyperbee
 ```
 
 In our code, we load our dependencies.
@@ -474,6 +481,107 @@ const s = o.createReadStream({ limit: 5, start, end  })
 
 The full example can be found at [examples/payed-orderbook-local.js](examples/payed-orderbook-local.js).
 
+
+### Example: Download and Query Historical Funding Stats
+
+<a id="example-funding-stats" />
+
+Funding Stats give you an insight about the development of the funding market available at Bitfinex. The data for all funding pairs is stored in a single database. In this short intro we will replicate the whole database and run a query on it.
+
+First we'll have to install the required modules:
+
+```
+npm install dazaar bitfinex-terminal-terms-of-use \
+  hyperbee bitfinex-terminal-funding-encoding
+```
+
+Similar to the other data streams we have to require `dazaar` and `hyperbee`:
+
+```js
+const dazaar = require('dazaar')
+const swarm = require('dazaar/swarm')
+
+const Hyperbee = require('hyperbee')
+```
+
+The Terms of Service are accepted by requiring the `bitfinex-terminal-terms-of-use` module, and then passing it into Dazaar. For now, we just require it:
+
+```js
+const terms = require('bitfinex-terminal-terms-of-use')
+```
+
+We also load the key- and value-encodings for the funding stats database:
+
+```js
+const { keyEncoding, valueEncoding } = require('bitfinex-terminal-funding-encoding')
+```
+
+In the next step we set up the Dazaar database:
+
+```js
+const market = dazaar('dbs/funding-stats')
+```
+
+We require the Dazaar Card which points to the data stream. In case you wonder, the card is available [here](https://github.com/bitfinexcom/bitfinex-terminal/tree/master/cards/free/funding-stats/bitfinex.terminal.funding.stats.json):
+
+```js
+const card = require('../cards/free/funding-stats/bitfinex.terminal.funding.stats.json')
+```
+
+To access the data we have to accept the Terms of Service. You can read them [here](https://github.com/bitfinexcom/bitfinex-terminal/tree/master/terms-of-use). If you agree with the terms, you pass them together with the Dazaar Card as an argument to the `market.buy` function. Please note that we also set `sparse` to `false`, so the whole database will get replicated in the background. In case we would set `sparse` to `true`, just the data resolving from our query would be replicated.
+
+```js
+const buyer = market.buy(card, { sparse: false, terms })
+```
+
+As next steps we are going to initiate the database and run our query. When we connect to the remote peers, a `feed` event is emitted. Starting from that point we can query the database using `hyperbee`:
+
+```js
+buyer.on('feed', function () {
+  console.log('got feed')
+
+  const db = new Hyperbee(buyer.feed, {
+    keyEncoding,
+    valueEncoding
+  })
+
+  doQuery(db)
+})
+```
+
+The Funding Stats database uses sub-databases. For each funding pair there is a sub-database that can be accessed using the `db.sub()` command. The `doQuery` function will query funding stats for `USD`. We will query the last three entries for the timeframe between the third of January and the fifth of January 2021, 9 AM. The SQL quivalent for the query we run is:
+
+```
+SELECT * from funding_stats
+WHERE f_currency = 'USD'
+  AND datetime >= '2021-01-03T09:00:00.000Z'
+  AND datetime <= '2021-01-05T09:00:00.000Z'
+LIMIT 3
+ORDER BY datetime DESC
+```
+
+Our hyperbee query looks like this, it logs the results to the console:
+
+```js
+function doQuery (db) {
+  db.sub('USD').createReadStream({
+    gte: new Date('2021-01-03T09:00:00.000Z'),
+    lte: new Date('2021-01-05T09:00:00.000Z'),
+    limit: 3,
+    reverse: true
+  }).on('data', (d) => {
+    console.log(d)
+  })
+}
+```
+
+The last step for receiving the funding stats is to connect to the remote peers, and starting to download and query the data:
+
+```js
+swarm(buyer)
+```
+
+That's it! When you run the code, it will download the whole funding stats database in the background. In addition it runs a query for `USD` funding stats to select a few data entries. You can find the full code in [examples/funding-stats.js](examples/funding-stats.js).
 
 ## Tutorials
 
