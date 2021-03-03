@@ -2,10 +2,10 @@
 
 Bitfinex Terminal offers market data as live data streams and is built on top of [Dazaar](https://github.com/bitfinexcom/dazaar). It offers first class support for Algo Traders by offering market data over a distributed database to everyone.
 
-There are free and paid market data streams available. They give algo traders and data scientists easy and fast access to our historical trading data. Trading data is easy to download and replicate. It is shared on a P2P network - like BitTorrent - but with a database interface. Also, unlike with BitTorrent, you won't have to download everything until you can use it, streaming time ranges is supported. And if you decide to download more data, e.g. from an earlier timeframe, it will of course preserve the data ordered. Free data comes in a nice B-Tree and orderbooks in compressed append-only logs, both guarantee fast access.
+There are free and paid market data streams available. They give algo traders and data scientists easy and fast access to our historical trading data. Trading data is easy to download and replicate. It is shared on a P2P network - like BitTorrent - but with a database interface. Also, unlike with BitTorrent, you won't have to download everything until you can use it, streaming time ranges is supported. And if you decide to download more data, e.g. from an earlier timeframe, it will of course preserve the data ordered. Free data comes in a nice B-Tree. Order and funding books are in compressed append-only logs, both guarantee fast access.
 
-Our paid streams give access to historical orderbook data. Bitfinex Terminal Orderbooks contain the snapshotted data of all Bitfinex orderbooks.
-Every five seconds the orderbook data is recorded, which gives an insight into important characterisitcs of the market, i.e. liquidity over time.
+Our paid streams give access to historical orderbook data and historical funding book data.
+Every five seconds we record the data of the funding and order books, which gives an insight into important characterisitcs of the market, i.e. liquidity over time.
 The data is compressed using an effective algorithm, which allows for fast data transfer and small storage footprints.
 
 ## Table of Contents
@@ -16,6 +16,7 @@ The data is compressed using an effective algorithm, which allows for fast data 
   1. [Example: Query Free Candles Data](#example-candles)
   1. [Example: Access the Paid Orderbooks with USDT](#example-orderbooks-usdt)
   1. [Example: Access the Paid Orderbooks with LND](#example-orderbooks-lnd)
+  1. [Example: Access Historical Funding Book Data with LND](#example-fundingbooks-lnd)
   1. [Example: Query Local Orderbook Data](#example-orderbooks-local)
   1. [Example: Download and Query Historical Funding Stats](#example-funding-stats)
   1. [Tutorial: Backtest your Trading Strategies with Bitfinex Terminal & Honey Framework](./articles/backtesting-with-hf.md)
@@ -33,6 +34,7 @@ Every data stream in Bitfinex Terminal and also Dazaar has a unique `id` on the 
  - Historical Trades Data (free)
  - Historical Funding Stats Data (free)
  - Historical Orderbooks Data (paid)
+ - Historical Fundingbooks Data (paid)
 
 Paid streams will require you to send a specific amount of crypto currency to a defined address. Dazaar will start replicating the whole dataset in the background unless sparse-mode is enabled. That means your database query is resolved with a high priority, while it additionally downloads the whole dataset in the background. For a guided example, [see this short how-to guide.](#example-orderbooks)
 
@@ -303,7 +305,7 @@ The full code example can be found in [examples/payed-orderbooks.js](examples/pa
 
 Next to USDT and LEO, payments with Bitcoin via Lightning are possible. The current fee is 100 satoshi per hour per dataset, as we will see soon. Let's get started.
 
-Similar to the previous example we downlaod the Dazaar Card of the data stream we are interested in. For our example we'll use the BTCUSD orderbooks Dazzar Card again:
+Similar to the previous example we download the Dazaar Card of the data stream we are interested in. For our example we'll use the BTCUSD orderbooks Dazzar Card again:
 
 ```
 wget https://github.com/bitfinexcom/bitfinex-terminal/tree/master/cards/paid/orderbooks/bitfinex.terminal.btcusd.orderbook.json
@@ -480,6 +482,92 @@ const s = o.createReadStream({ limit: 5, start, end  })
 ```
 
 The full example can be found at [examples/payed-orderbook-local.js](examples/payed-orderbook-local.js).
+
+
+### Example: Access Historical Funding Book Data with LND
+
+<a id="example-fundingbooks-lnd" />
+
+Historical funding book data gives an insight into the development of the funding market over time. Access to historical funding book data works similar to orderbooks, we have to install required modules first:
+
+```
+npm install dazaar @dazaar/payment-lightning  \
+  bitfinex-terminal-funding-book-encoding bitfinex-terminal-terms-of-use \
+  hyperbee
+```
+
+Before we can start we have to choose a funding currency. In our example we use `USD`. We download the Dazaar Card for it:
+
+```
+wget https://github.com/bitfinexcom/bitfinex-terminal/tree/master/cards/paid/funding/bitfinex.terminal.funding.books.json
+```
+
+Lets do some coding now. To start we need to require our dependencies:
+
+```js
+const dazaar = require('dazaar')
+const swarm = require('dazaar/swarm')
+const Hyperbee = require('hyperbee')
+const Payment = require('@dazaar/payment-lightning')
+const { keyEncoding, valueEncoding } = require('bitfinex-terminal-funding-book-encoding')
+
+const terms = require('bitfinex-terminal-terms-of-use')
+```
+
+One important module is the module `bitfinex-terminal-terms-of-use`. You can read the terms of use here: [https://github.com/bitfinexcom/bitfinex-terminal/tree/master/terms-of-use](https://github.com/bitfinexcom/bitfinex-terminal/tree/master/terms-of-use). Just when you agree with the terms you can continue with the tutorial. In order to agree, we have to pass the terms into the Dazaar buy function later.
+
+Similar to previous examples we require the card and set up the database. We will query the USD funding book. This time we enable sparse mode. That means, just the data we request in a query is downlaoded. Sparse mode gives faster results to ad-hoc queries, but it does not download the other data that is not part of the query in the background for us. Please also note that we are passing the terms of use here to accept them.
+
+```js
+const card = require('../cards/paid/funding/bitfinex.terminal.funding.books.json')
+
+const market = dazaar('dbs/terminal-fundingbook-usd-lnd')
+const buyer = market.buy(card, { sparse: true, terms })
+```
+
+The next step is to request an invoice for payment. It is printed to the console:
+
+```js
+buyer.ready(function () {
+  console.log('ready')
+
+  const payment = new Payment(buyer)
+  payment.requestInvoice(100, function (err, invoice) {
+    if (err) console.log(err)
+    console.log(invoice)
+  })
+
+  swarm(buyer)
+})
+```
+
+Once payment has happened and there is still time left to download and query data, the `feed` event is emitted, and we can query the data:
+
+```js
+buyer.on('feed', function () {
+  const db = new Hyperbee(buyer.feed, {
+    keyEncoding,
+    valueEncoding
+  })
+
+  doQuery(db)
+})
+```
+
+The function `doQuery` runs the actual query of the data that also replicates the data that is replicated. As we are in sparse-mode, the data not related to our query is not replicated in the background:
+
+```js
+function doQuery (db) {
+  db.sub('USD').createReadStream({
+    limit: 10,
+    reverse: true
+  }).on('data', (d) => {
+    console.log(JSON.stringify(d, null, 2))
+  })
+}
+```
+
+You can find the full example in [examples/payed-fundingbooks-lnd.js](examples/payed-fundingbooks-lnd.js).
 
 
 ### Example: Download and Query Historical Funding Stats
